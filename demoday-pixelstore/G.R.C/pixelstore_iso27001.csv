@@ -1,0 +1,94 @@
+code,statut,maturite,commentaire
+A.5.1,Partiel,1,Aucune politique de securite SI formalisee ni publiee
+A.5.2,Partiel,2,Roles definis (RACI projet) mais non formalises dans un document officiel
+A.5.3,Partiel,2,Separation partielle : SecOps/Dev/Chef de projet mais pas de politique ecrite
+A.5.4,Partiel,1,Responsabilite direction non documentee — contexte academique
+A.5.5,Non implemente,0,Aucun contact etabli avec autorites (ANSSI/CNIL)
+A.5.6,Non implemente,0,Aucune participation a des groupes specialises cybersecurite
+A.5.7,Partiel,2,Veille via Jedha Bootcamp et rapport de pentest — non systematique
+A.5.8,Partiel,2,Securite integree au projet (pentest, WAF, IAM) mais sans plan formel
+A.5.9,Non implemente,1,Pas d'inventaire formel des actifs — liste implicite dans Terraform
+A.5.10,Non implemente,0,Aucune politique d'utilisation acceptable des actifs
+A.5.11,Non implemente,0,Pas de procedure de restitution des actifs
+A.5.12,Non implemente,1,Pas de classification formelle des informations
+A.5.13,Non implemente,0,Pas de marquage de l'information
+A.5.14,Non implemente,0,Pas de politique de transfert d'information
+A.5.15,Implemente,4,IAM least privilege — SG en cascade — acces strictement controles
+A.5.16,Implemente,3,IAM roles et users definis — SSM Session Manager — pas de MFA
+A.5.17,Implemente,4,Secrets Manager — bcrypt passwords — aucune cle en clair
+A.5.18,Implemente,3,Droits EC2 limites a S3 et Secrets Manager uniquement
+A.5.19,Non implemente,0,AWS comme fournisseur — pas de clause securite formalisee
+A.5.20,Non implemente,0,Pas d'accord de securite fournisseur documente
+A.5.21,Non implemente,0,Chaine approvisionnement TIC non evaluee
+A.5.22,Partiel,2,CloudTrail surveille les API AWS — surveillance fournisseurs non formalisee
+A.5.23,Partiel,2,Architecture AWS documentee en Terraform — pas de revue securite cloud formelle
+A.5.24,Non implemente,1,Pas de plan de gestion des incidents de securite
+A.5.25,Non implemente,0,Pas de procedure d'evaluation et decision sur incidents
+A.5.26,Non implemente,0,Pas de procedure de reponse aux incidents documentee
+A.5.27,Partiel,1,Pentest realise — retour d'experience informel seulement
+A.5.28,Non implemente,0,Pas de procedure de collecte et preservation des preuves
+A.5.29,Partiel,2,Multi-AZ assure la continuite — pas de plan PCA formel
+A.5.30,Partiel,2,Terraform permet de reconstruire l'infra — RPO/RTO definis mais non testes
+A.5.31,Partiel,2,RGPD pris en compte (eu-west-3) — pas d'audit juridique complet
+A.5.32,Non implemente,0,Droits propriete intellectuelle non evalues
+A.5.33,Partiel,2,CloudTrail 90 jours — logs S3 — pas de politique de conservation formelle
+A.5.34,Partiel,2,Donnees en France (RGPD) — pas de registre traitements — pas de DPA
+A.5.35,Partiel,1,Pentest interne realise — pas de revue independante externe
+A.5.36,Non implemente,0,Pas de processus de verification de conformite aux politiques
+A.5.37,Partiel,2,Procedures dans Terraform et README — pas de documentation operationnelle formelle
+A.6.1,Non implemente,0,Pas de verification d'antecedents (contexte academique)
+A.6.2,Non implemente,0,Pas de conditions d'embauche avec clauses securite
+A.6.3,Partiel,2,Formation Jedha Bootcamp — pas de programme de sensibilisation recurrent
+A.6.4,Non implemente,0,Pas de processus disciplinaire
+A.6.5,Non implemente,0,Pas de procedures de sortie avec securite
+A.6.6,Non implemente,0,Pas d'engagements de confidentialite signes
+A.6.7,Non implemente,0,Pas de politique de travail a distance
+A.6.8,Non implemente,0,Pas de canal de signalement des evenements de securite
+A.7.1,Implemente,4,AWS data center — securite physique geree par AWS (SOC2/ISO27001 certifie)
+A.7.2,Implemente,4,Acces physiques AWS — controles par AWS
+A.7.3,Implemente,4,Salles securisees — infrastructure AWS
+A.7.4,Implemente,4,Surveillance physique AWS
+A.7.5,Implemente,4,Protection menaces physiques — AWS
+A.7.6,Implemente,4,Zones securisees — AWS
+A.7.7,Non implemente,0,Politique bureau propre non applicable / non definie
+A.7.8,Implemente,4,Materiel AWS — controles par AWS
+A.7.9,Non implemente,0,Securite actifs hors site non definie
+A.7.10,Partiel,2,S3 avec versioning et AES256 — pas de politique supports amovibles
+A.7.11,Implemente,4,Services generaux — AWS
+A.7.12,Implemente,4,Cablage — AWS
+A.7.13,Implemente,4,Maintenance equipements — AWS
+A.7.14,Implemente,4,Elimination securisee — AWS gere les disques
+A.8.1,Non implemente,1,Pas de politique de gestion des terminaux utilisateurs
+A.8.2,Implemente,4,IAM least privilege — aucun acces root — SSM
+A.8.3,Implemente,3,SG RDS accessible uniquement depuis SG EC2 — restriction effective
+A.8.4,Non implemente,1,Code source sur GitHub — pas de controle d'acces formel
+A.8.5,Partiel,2,Authentification bcrypt — mais pas de MFA sur AWS ni sur l'app
+A.8.6,Partiel,3,ASG adapte la capacite automatiquement selon CPU
+A.8.7,Non implemente,0,Pas d'antivirus/EDR sur les instances EC2
+A.8.8,Partiel,2,Pentest realise — pas de processus continu de gestion des vulnerabilites
+A.8.9,Implemente,4,Toute la configuration est dans Terraform versionne sur GitHub
+A.8.10,Non implemente,0,Pas de politique de suppression des donnees
+A.8.11,Non implemente,0,Pas de masquage des donnees sensibles
+A.8.12,Non implemente,0,Pas de DLP
+A.8.13,Implemente,4,Snapshots RDS quotidiens — retention 7 jours — S3 versioning
+A.8.14,Implemente,4,Architecture Multi-AZ — redondance native
+A.8.15,Implemente,4,CloudTrail multi-region — logs S3 90 jours — CloudWatch
+A.8.16,Implemente,4,CloudWatch 4 alarmes — GuardDuty — SNS alertes
+A.8.17,Partiel,2,Synchronisation NTP AWS implicite — non explicitement configuree
+A.8.18,Partiel,2,SSM Session Manager — pas de politique formelle utilitaires privileges
+A.8.19,Non implemente,0,Pas de politique d'installation de logiciels
+A.8.20,Implemente,4,VPC Multi-AZ — SG en cascade — NACLs — WAF
+A.8.21,Implemente,4,Services reseau AWS securises — WAF sur ALB
+A.8.22,Implemente,4,Subnets publics/prives separes — RDS isole
+A.8.23,Non implemente,0,Pas de filtrage web sortant depuis EC2
+A.8.24,Non implemente,1,Pas de TLS/HTTPS — F1 pentest critique — port 443 ferme
+A.8.25,Partiel,2,Securite pensee en conception mais pas de SDLC formel
+A.8.26,Partiel,2,WAF couvre OWASP — pas de revue securite formelle du code applicatif
+A.8.27,Implemente,3,Architecture defense en profondeur — VPC tiers — documentee
+A.8.28,Partiel,2,Requetes parametrees PyMySQL (anti-SQLi) — pas de revue code formelle
+A.8.29,Partiel,2,Pentest boite grise realise — pas de SAST/DAST automatise en CI/CD
+A.8.30,Non implemente,0,Pas de processus de securite pour le dev externalise
+A.8.31,Non implemente,1,Pas de separation env dev/test/prod — deploiement direct en prod
+A.8.32,Partiel,2,Terraform versionne sur GitHub — pas de processus de Change Management formel
+A.8.33,Non implemente,0,Pas de politique de gestion des donnees de test
+A.8.34,Non implemente,0,Pas de procedure de protection du SI pendant audit

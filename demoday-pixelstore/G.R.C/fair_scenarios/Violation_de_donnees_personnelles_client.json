@@ -1,0 +1,24 @@
+{
+  "nom_scenario": "Violation de donnees personnelles clients (RGPD — notification CNIL)",
+  "description": "Fuite BDD RDS contenant emails + mots de passe : obligation notification CNIL 72h + clients",
+  "TEF": {
+    "min": 0.05,
+    "likely": 0.2,
+    "max": 1.0
+  },
+  "Vuln": {
+    "min": 0.1,
+    "likely": 0.25,
+    "max": 0.5
+  },
+  "PLM_par_evenement": {
+    "min": 10000,
+    "likely": 50000,
+    "max": 200000
+  },
+  "SLM_par_evenement": {
+    "min": 20000,
+    "likely": 80000,
+    "max": 500000
+  }
+}

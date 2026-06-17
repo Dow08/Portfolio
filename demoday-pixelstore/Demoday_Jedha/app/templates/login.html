@@ -1,0 +1,262 @@
+{% extends "base.html" %}
+
+{% block title %}PixelStore - {{ "Créer un compte" if mode == "register" else "Connexion" }}{% endblock %}
+
+{% block extra_styles %}
+
+.login-page {
+  min-height: calc(100vh - var(--nav-h));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  position: relative;
+  overflow: hidden;
+}
+.login-page::before {
+  content: '';
+  position: absolute;
+  top: 20%; left: 50%; transform: translateX(-50%);
+  width: 500px; height: 500px;
+  background: radial-gradient(ellipse, var(--gold-glow) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--surface);
+  border: 0.5px solid var(--border2);
+  border-radius: var(--radius-lg);
+  padding: 48px 40px;
+  position: relative;
+  z-index: 1;
+  opacity: 0;
+  animation: fadeUp 0.6s ease 0.1s forwards;
+}
+.login-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%; transform: translateX(-50%);
+  width: 60%; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+.login-logo {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 400;
+  letter-spacing: 4px;
+  color: var(--gold);
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 8px;
+}
+.login-tagline {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: center;
+  letter-spacing: 0.5px;
+  margin-bottom: 36px;
+}
+
+.login-tabs {
+  display: flex;
+  background: var(--surface2);
+  border-radius: var(--radius-sm);
+  padding: 3px;
+  margin-bottom: 32px;
+}
+.login-tab {
+  flex: 1;
+  padding: 9px;
+  text-align: center;
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border-radius: calc(var(--radius-sm) - 2px);
+  text-decoration: none;
+  transition: all var(--transition);
+}
+.login-tab.active {
+  background: var(--gold);
+  color: var(--black);
+  font-weight: 500;
+}
+.login-tab:not(.active):hover { color: var(--text); }
+
+.form-group { margin-bottom: 20px; }
+.form-label {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+.form-input {
+  width: 100%;
+  background: var(--surface2);
+  border: 0.5px solid var(--border2);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  outline: none;
+  transition: border-color var(--transition), background var(--transition);
+}
+.form-input::placeholder { color: var(--text-dim); }
+.form-input:focus {
+  border-color: var(--gold);
+  background: var(--black);
+}
+
+.form-error {
+  background: #e05c5c12;
+  border: 0.5px solid #e05c5c33;
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  font-size: 13px;
+  color: #e05c5c;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.form-error svg { width: 16px; height: 16px; stroke: #e05c5c; fill: none; flex-shrink: 0; }
+
+.btn-submit {
+  width: 100%;
+  padding: 14px;
+  background: var(--gold);
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--black);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background var(--transition), transform var(--transition);
+  margin-top: 8px;
+}
+.btn-submit:hover { background: var(--gold-light); transform: translateY(-2px); }
+.btn-submit:active { transform: translateY(0); }
+
+.login-features {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 0.5px solid var(--border);
+}
+.login-feature {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--text-dim);
+  letter-spacing: 0.5px;
+}
+.login-feature svg { width: 14px; height: 14px; stroke: var(--gold); fill: none; flex-shrink: 0; }
+
+{% endblock %}
+
+{% block content %}
+<div class="login-page">
+  <div class="login-card">
+
+    <div class="login-logo">PixelStore</div>
+    <p class="login-tagline">
+      {% if mode == "register" %}
+        Créez votre compte et accédez à notre catalogue premium
+      {% else %}
+        Connectez-vous pour accéder à votre espace
+      {% endif %}
+    </p>
+
+    <div class="login-tabs">
+      <a href="{{ url_for('login', mode='login') }}"
+         class="login-tab {% if mode != 'register' %}active{% endif %}">
+        Connexion
+      </a>
+      <a href="{{ url_for('login', mode='register') }}"
+         class="login-tab {% if mode == 'register' %}active{% endif %}">
+        Créer un compte
+      </a>
+    </div>
+
+    {% if error %}
+    <div class="form-error">
+      <svg viewBox="0 0 24 24" stroke-width="1.5">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="12" y1="8" x2="12" y2="12"/>
+        <line x1="12" y1="16" x2="12.01" y2="16"/>
+      </svg>
+      {{ error }}
+    </div>
+    {% endif %}
+
+    <form method="POST" action="{{ url_for('login') }}">
+      {% if mode == "register" %}
+      <input type="hidden" name="action" value="register" />
+      <div class="form-group">
+        <label class="form-label" for="name">Prénom</label>
+        <input class="form-input" type="text" id="name" name="name"
+               placeholder="Votre prénom" autocomplete="given-name" required />
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="email">Adresse e-mail</label>
+        <input class="form-input" type="email" id="email" name="email"
+               placeholder="vous@exemple.com" autocomplete="email" required />
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="password">Mot de passe</label>
+        <input class="form-input" type="password" id="password" name="password"
+               placeholder="Minimum 8 caractères" autocomplete="new-password" required />
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="confirm">Confirmer le mot de passe</label>
+        <input class="form-input" type="password" id="confirm" name="confirm"
+               placeholder="Répétez votre mot de passe" autocomplete="new-password" required />
+      </div>
+      <button type="submit" class="btn-submit">Créer mon compte</button>
+
+      {% else %}
+      <input type="hidden" name="action" value="login" />
+      <div class="form-group">
+        <label class="form-label" for="email">Adresse e-mail</label>
+        <input class="form-input" type="email" id="email" name="email"
+               placeholder="vous@exemple.com" autocomplete="email" required />
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="password">Mot de passe</label>
+        <input class="form-input" type="password" id="password" name="password"
+               placeholder="Votre mot de passe" autocomplete="current-password" required />
+      </div>
+      <button type="submit" class="btn-submit">Se connecter</button>
+      {% endif %}
+    </form>
+
+    <div class="login-features">
+      <div class="login-feature">
+        <svg viewBox="0 0 24 24" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Paiement sécurisé
+      </div>
+      <div class="login-feature">
+        <svg viewBox="0 0 24 24" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        Livraison 24h
+      </div>
+      <div class="login-feature">
+        <svg viewBox="0 0 24 24" stroke-width="1.5"><circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 00-8 8c0 5.4 7 12 8 12s8-6.6 8-12a8 8 0 00-8-8z"/></svg>
+        Paris & IDF
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

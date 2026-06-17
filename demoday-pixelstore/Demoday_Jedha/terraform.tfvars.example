@@ -1,0 +1,35 @@
+# Modele de configuration pour deployer PixelStore.
+# Copier ce fichier en "terraform.tfvars" puis adapter les valeurs.
+#   cp terraform.tfvars.example terraform.tfvars
+#
+# IMPORTANT : ne JAMAIS mettre le mot de passe RDS ici.
+# Il se passe en variable d'environnement avant le deploiement :
+#   export TF_VAR_db_password="<mot_de_passe_RDS_fort>"
+
+# General
+project_name = "pixelstore"
+env          = "prod"
+owner        = "equipe"
+aws_region   = "eu-west-3"
+
+# Reseau
+vpc_cidr             = "10.0.0.0/16"
+public_subnet_cidrs  = ["10.0.1.0/24", "10.0.2.0/24"]
+private_subnet_cidrs = ["10.0.3.0/24", "10.0.4.0/24"]
+availability_zones   = ["eu-west-3a", "eu-west-3b"]
+
+# EC2
+instance_type = "t2.micro"
+ami_id        = "ami-0f61de2873e29e866" # Amazon Linux 2023 - eu-west-3
+
+# RDS
+db_instance_class = "db.t3.micro"
+db_username       = "admin"
+db_name           = "pixelstore_db"
+
+# Monitoring
+alarm_email = "votre-email@exemple.fr"
+
+# Sauvegardes RDS (valeurs prod par defaut ; decommenter pour surcharger)
+# multi_az                = true
+# backup_retention_period = 7

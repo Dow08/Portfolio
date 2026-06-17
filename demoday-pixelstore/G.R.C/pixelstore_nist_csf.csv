@@ -1,0 +1,32 @@
+fonction,categorie,sous_categorie,score,commentaire
+GV,GV.OC,GV.OC-01,1,Mission implicitement comprise — non documentee
+GV,GV.OC,GV.OC-02,1,Parties prenantes identifiees informellement (equipe 3 personnes)
+GV,GV.RM,GV.RM-01,1,Politique de gestion des risques inexistante
+GV,GV.RM,GV.RM-02,2,Risques identifies dans specs techniques — pas de registre formel
+GV,GV.RR,GV.RR-01,2,RACI projet defini — roles securite assigns
+GV,GV.PO,GV.PO-01,1,Pas de PSSI formelle
+GV,GV.OV,GV.OV-01,1,Pas de gouvernance de supervision securite
+GV,GV.SC,GV.SC-01,1,AWS comme fournisseur — pas d'evaluation risque fournisseur
+ID,ID.AM,ID.AM-01,2,Actifs listes dans Terraform — pas d'inventaire formel
+ID,ID.AM,ID.AM-02,3,Ressources cloud cataloguees via Terraform state
+ID,ID.RA,ID.RA-01,2,Analyse risques dans specs techniques — EBIOS non applique
+ID,ID.RA,ID.RA-02,2,Pentest identifie les vulnerabilites — pas de threat modeling formel
+ID,ID.IM,ID.IM-01,1,Pas de programme d'amelioration continue identifie
+PR,PR.AA,PR.AA-01,4,IAM least privilege — SSM Session Manager — bcrypt
+PR,PR.AA,PR.AA-02,2,Authentification app sans MFA — AWS sans MFA
+PR,PR.DS,PR.DS-01,4,AES256 RDS + S3 — Secrets Manager — chiffrement en transit VPC
+PR,PR.DS,PR.DS-02,3,Requetes parametrees — WAF SQLi — SG en cascade
+PR,PR.IR,PR.IR-01,1,Pas de politique de protection de l'information formelle
+PR,PR.PS,PR.PS-01,4,Terraform versionne — configuration as code — immutable infra
+PR,PR.PS,PR.PS-02,2,User_data script EC2 — pas de hardening OS formel (CIS Benchmark)
+DE,DE.CM,DE.CM-01,4,CloudWatch alarmes — GuardDuty — CloudTrail — SNS
+DE,DE.CM,DE.CM-02,3,WAF logs — ALB access logs — VPC Flow Logs
+DE,DE.AE,DE.AE-01,2,Alertes SNS configurees — pas de playbook de triage
+DE,DE.AE,DE.AE-02,1,Pas de correlation d'evenements (SIEM)
+RS,RS.MA,RS.MA-01,1,Pas de plan de reponse aux incidents documente
+RS,RS.AN,RS.AN-01,2,CloudTrail permet forensique post-incident — pas de procedure
+RS,RS.CO,RS.CO-01,1,Pas de procedure de communication de crise
+RS,RS.MI,RS.MI-01,2,WAF bloque en temps reel — GuardDuty alerte — pas de playbook
+RC,RC.RP,RC.RP-01,2,Procedure terraform apply documentee — RPO/RTO definis mais non testes
+RC,RC.BC,RC.BC-01,3,Multi-AZ assure la continuite — RDS failover auto
+RC,RC.CO,RC.CO-01,1,Pas de communication post-incident definie

@@ -1,0 +1,303 @@
+{% extends "base.html" %}
+
+{% block title %}PixelStore - {{ product.name }}{% endblock %}
+
+{% block extra_styles %}
+
+.product-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 40px 80px;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+  margin-bottom: 48px;
+  opacity: 0;
+  animation: fadeUp 0.4s ease 0.05s forwards;
+}
+.breadcrumb a { color: var(--text-muted); transition: color var(--transition); }
+.breadcrumb a:hover { color: var(--gold); }
+.breadcrumb svg { width: 12px; height: 12px; stroke: var(--text-dim); fill: none; }
+.breadcrumb span { color: var(--text); }
+
+.product-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+
+.product-visual {
+  position: sticky;
+  top: calc(var(--nav-h) + 24px);
+  opacity: 0;
+  animation: fadeUp 0.6s ease 0.1s forwards;
+}
+
+.product-img-wrap {
+  position: relative;
+  background: var(--surface);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  aspect-ratio: 4/5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.product-img-wrap::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+}
+
+.product-img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.product-img-wrap:hover .product-img { transform: scale(1.03); }
+
+.product-img-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  width: 100%; height: 100%;
+}
+.product-img-placeholder svg { width: 80px; height: 80px; stroke: var(--border2); fill: none; stroke-width: 0.8; }
+.product-img-placeholder p { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--text-dim); }
+
+.product-badge-large {
+  position: absolute;
+  top: 20px; left: 20px;
+  background: var(--gold);
+  color: var(--black);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: 30px;
+}
+
+.product-info { opacity: 0; animation: fadeUp 0.6s ease 0.2s forwards; }
+
+.product-eyebrow { font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+
+.product-title {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--text);
+  margin-bottom: 24px;
+}
+
+.product-rating { display: flex; align-items: center; gap: 10px; margin-bottom: 28px; }
+.stars { display: flex; gap: 2px; }
+.star { width: 14px; height: 14px; fill: var(--gold); }
+.rating-count { font-size: 12px; color: var(--text-muted); }
+
+.product-price-block { display: flex; align-items: baseline; gap: 12px; margin-bottom: 8px; }
+.product-price { font-family: var(--font-display); font-size: 42px; font-weight: 400; color: var(--gold); }
+.product-price-suffix { font-size: 14px; color: var(--text-muted); }
+.product-price-note { font-size: 12px; color: var(--text-muted); margin-bottom: 28px; }
+
+.info-divider { height: 0.5px; background: var(--border); margin: 28px 0; }
+
+.product-desc { font-size: 14px; color: var(--text-muted); line-height: 1.9; margin-bottom: 32px; }
+
+.option-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; }
+.option-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; }
+.option-pill {
+  padding: 8px 16px;
+  background: transparent;
+  border: 0.5px solid var(--border2);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.option-pill:hover, .option-pill.active { border-color: var(--gold); color: var(--gold); background: var(--gold-glow); }
+
+.product-actions { display: flex; gap: 12px; margin-bottom: 32px; }
+
+.btn-add-cart {
+  flex: 1;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  padding: 16px;
+  background: var(--gold);
+  border: none; border-radius: var(--radius-sm);
+  color: var(--black);
+  font-family: var(--font-body);
+  font-size: 13px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase;
+  cursor: pointer;
+  transition: background var(--transition), transform var(--transition);
+}
+.btn-add-cart:hover { background: var(--gold-light); transform: translateY(-2px); }
+.btn-add-cart svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.5; }
+
+.btn-wishlist {
+  width: 52px; height: 52px;
+  background: transparent;
+  border: 0.5px solid var(--border2); border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition); flex-shrink: 0;
+}
+.btn-wishlist:hover { border-color: var(--gold); background: var(--gold-glow); }
+.btn-wishlist svg { width: 18px; height: 18px; stroke: var(--text-muted); fill: none; stroke-width: 1.5; transition: stroke var(--transition); }
+.btn-wishlist:hover svg { stroke: var(--gold); }
+
+.product-reassurance { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 32px; }
+.reassurance-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 12px;
+  background: var(--surface2);
+  border-radius: var(--radius-sm);
+  border: 0.5px solid var(--border);
+}
+.reassurance-item svg { width: 16px; height: 16px; stroke: var(--gold); fill: none; flex-shrink: 0; margin-top: 2px; }
+.reassurance-title { font-size: 12px; color: var(--text); font-weight: 500; margin-bottom: 2px; }
+.reassurance-sub { font-size: 11px; color: var(--text-muted); }
+
+.specs-title { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+.specs-table { width: 100%; border-collapse: collapse; }
+.specs-table tr { border-bottom: 0.5px solid var(--border); }
+.specs-table tr:last-child { border-bottom: none; }
+.specs-table td { padding: 10px 0; font-size: 13px; }
+.specs-table td:first-child { color: var(--text-muted); width: 45%; }
+.specs-table td:last-child { color: var(--text); text-align: right; }
+
+{% endblock %}
+
+{% block content %}
+<div class="product-page">
+
+  <nav class="breadcrumb">
+    <a href="{{ url_for('index') }}">Catalogue</a>
+    <svg viewBox="0 0 24 24" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+    <a href="{{ url_for('index', brand=product.brand) }}">{{ product.brand }}</a>
+    <svg viewBox="0 0 24 24" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+    <span>{{ product.name }}</span>
+  </nav>
+
+  <div class="product-layout">
+
+    <div class="product-visual">
+      <div class="product-img-wrap">
+        {% if product.badge %}
+        <span class="product-badge-large">{{ product.badge }}</span>
+        {% endif %}
+        <img src="{{ product.image_url }}" alt="{{ product.name }}" class="product-img" />
+      </div>
+    </div>
+
+    <div class="product-info">
+
+      <p class="product-eyebrow">{{ product.brand }}</p>
+      <h1 class="product-title">{{ product.name }}</h1>
+
+      <div class="product-rating">
+        <div class="stars">
+          {% for i in range(5) %}
+          <svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          {% endfor %}
+        </div>
+        <span class="rating-count">4,8 / 5 - 124 avis</span>
+      </div>
+
+      <div class="product-price-block">
+        <span class="product-price">{{ product.price }} €</span>
+        <span class="product-price-suffix">TTC</span>
+      </div>
+      <p class="product-price-note">ou 4 x {{ "%.2f"|format(product.price / 4) }} € sans frais</p>
+
+      <div class="info-divider"></div>
+
+      <p class="product-desc">{{ product.description }}</p>
+
+      <p class="option-label">Stockage</p>
+      <div class="option-pills">
+        {% set storages = product.specs.get('Stockage', '128 Go').split(' / ') %}
+        {% for s in storages %}
+        <button type="button" class="option-pill {% if loop.first %}active{% endif %}">{{ s.strip() }}</button>
+        {% endfor %}
+      </div>
+
+      <div class="product-actions">
+        <form action="{{ url_for('cart_add') }}" method="POST" style="flex:1; display:flex;">
+          <input type="hidden" name="product_id" value="{{ product.id }}" />
+          <input type="hidden" name="next" value="{{ url_for('product', product_id=product.id) }}" />
+          <button type="submit" class="btn-add-cart" style="flex:1;">
+            <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+            Ajouter au panier
+          </button>
+        </form>
+        <button class="btn-wishlist" title="Ajouter aux favoris">
+          <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        </button>
+      </div>
+
+      <div class="product-reassurance">
+        <div class="reassurance-item">
+          <svg viewBox="0 0 24 24" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          <div>
+            <div class="reassurance-title">Livraison 24h</div>
+            <div class="reassurance-sub">Paris & Île-de-France</div>
+          </div>
+        </div>
+        <div class="reassurance-item">
+          <svg viewBox="0 0 24 24" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <div>
+            <div class="reassurance-title">Garantie 2 ans</div>
+            <div class="reassurance-sub">SAV constructeur</div>
+          </div>
+        </div>
+        <div class="reassurance-item">
+          <svg viewBox="0 0 24 24" stroke-width="1.5"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
+          <div>
+            <div class="reassurance-title">Retour 30 jours</div>
+            <div class="reassurance-sub">Satisfait ou remboursé</div>
+          </div>
+        </div>
+        <div class="reassurance-item">
+          <svg viewBox="0 0 24 24" stroke-width="1.5"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          <div>
+            <div class="reassurance-title">Paiement sécurisé</div>
+            <div class="reassurance-sub">CB, Visa, Mastercard</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-divider"></div>
+
+      <p class="specs-title">Caractéristiques techniques</p>
+      <table class="specs-table">
+        {% for key, val in product.specs.items() %}
+        <tr>
+          <td>{{ key }}</td>
+          <td>{{ val }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/product.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,29 @@
+{
+  "generated_at": "2026-05-28T11:35:30.397784Z",
+  "articles": [
+    {
+      "title": "JINX-0164 Targets Cryptocurrency Firms with Fake Recruiter Lures and macOS Malware",
+      "url": "https://thehackernews.com/2026/05/jinx-0164-targets-cryptocurrency-firms.html",
+      "summary": "A new campaign orchestrated by a previously undocumented threat actor has targeted cryptocurrency organizations with an aim to facilitate digital asset theft using recruitment-themed social engineering and bespoke macOS malware.   \"These campaigns leveraged sophisticated social engineering techniques, custom macOS malware, and deep targeting of CI/CD infrastructure,\" Wiz researchers Shira Ayal, Eden Abergil, Andre Maccarone, Yuval Dan, and Benjamin Read said . \"The used methods enabled the threat actor to move laterally from compromised employee laptops to code distribution systems and development infrastructure.\"   The Google-owned cloud security company is tracking the activity under the moniker JINX-0164 . The threat actor is assessed to be active since at least mid-2025 and motivated by financial gain, targeting developers through recruitment-themed and other social engineering techniques to siphon cryptocurrencies. In at least one case, the adversary is said t...",
+      "title_fr": "JINX-0164 cible les entreprises de cryptomonnaie avec de fausses offres d'emploi et des malwares macOS",
+      "summary_fr": "Une nouvelle campagne, menée par un acteur de menace inconnu (JINX-0164), vise les organisations de cryptomonnaie pour voler des actifs numériques. Elle utilise des techniques d'ingénierie sociale basées sur le recrutement et un malware macOS sur mesure. L'acteur, actif depuis mi-2025, exploite ces méthodes pour passer des ordinateurs portables compromis aux systèmes de distribution de code et d'infrastructure de développement."
+    },
+    {
+      "title": "Grandoreiro Malware and BTMOB RAT Campaigns Target Windows and Android Users",
+      "url": "https://thehackernews.com/2026/05/grandoreiro-malware-and-btmob-rat.html",
+      "summary": "Latin America and Europe become the target of two banking trojan campaigns that are designed to infect Windows and Android devices with Grandoreiro and BTMOB malware, respectively.   That's according to new findings from WatchGuard and ESET, which have observed the two malware families being used to single out companies in Spain, Portugal, and Mexico, as well as mobile users in Brazil.   The Grandoreiro  campaign \"uses the DLL Side-Loading technique abusing four different software, targeting banks in Portugal,\" WatchGuard researcher Euler Neto said .   Active since 2016, Grandoreiro is an actively evolving banking malware that's capable of stealing credentials associated with thousands of financial institutions across 45 countries and territories. It's typically distributed via phishing emails, instructing recipients to click on sketchy links.   Despite some arrests and attempts by Brazilian authorities to dismantle its infrastructure in early 2024, the malware h...",
+      "title_fr": "Campagnes de malwares Grandoreiro et BTMOB RAT ciblent les utilisateurs Windows et Android",
+      "summary_fr": "L'Amérique latine et l'Europe sont la cible de deux campagnes de chevaux de Troie bancaires, Grandoreiro et BTMOB, infectant respectivement les appareils Windows et Android. Ces malwares visent des entreprises en Espagne, au Portugal et au Mexique, ainsi que des utilisateurs mobiles au Brésil. Grandoreiro, actif depuis 2016, est un malware bancaire en constante évolution capable de voler des identifiants financiers via des e-mails de phishing."
+    },
+    {
+      "title": "Malicious npm Package Stole Files From Claude AI User Directory via GitHub",
+      "url": "https://thehackernews.com/2026/05/malicious-npm-package-stole-files-from.html",
+      "summary": "Cybersecurity researchers have discovered a new malicious package on the npm registry that comes with information stealing capabilities.   According to OX Security, the package, named \" mouse5212-super-formatter ,\" is designed to upload files from \"/mnt/user-data,\" a dedicated directory used by Anthropic's Claude artificial intelligence (AI) tool to handle uploads and outputs in the background. The activity has been codenamed Malware-Slop .   \"By analyzing the malware, it turns out that the script presents itself as an internal 'archive deployment sync' utility that validates or initializes a GitHub repository, captures a lightweight 'network status' snapshot, and then performs a structured synchronization of local workspace files into a remote tracking tree,\" researchers Moshe Siman Tov Bustan and Nir Zadok said .   In reality, however, it authenticates to GitHub during the postinstall stage, either using a GitHub access token found i...",
+      "title_fr": "Un paquet npm malveillant a volé des fichiers du répertoire utilisateur de Claude AI via GitHub",
+      "summary_fr": "Des chercheurs en cybersécurité ont découvert un nouveau paquet malveillant sur le registre npm, nommé \"mouse5212-super-formatter\", doté de capacités de vol d'informations. Ce paquet est conçu pour télécharger des fichiers depuis le répertoire \"/mnt/user-data\", un dossier dédié de l'outil d'IA Claude d'Anthropic. Bien qu'il se présente comme un utilitaire de synchronisation, il s'authentifie en réalité sur GitHub pour exfiltrer des fichiers."
+    }
+  ],
+  "script": "Bonjour et bienvenue dans votre Flash Info Cyber du jour, le rendez-vous incontournable pour rester informé des dernières menaces numériques. Au programme aujourd'hui : des campagnes ciblées sur les cryptomonnaies,",
+  "audio_file": "audio/latest_briefing.mp3",
+  "ai_provider": "gemini"
+}

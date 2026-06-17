@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}PixelStore{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* -- RESET & BASE ------------------------------------------- */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:      #080808;
+      --surface:    #111111;
+      --surface2:   #181818;
+      --border:     #242424;
+      --border2:    #2e2e2e;
+      --text:       #f0ece4;
+      --text-muted: #666660;
+      --text-dim:   #3a3a36;
+      --gold:       #c9a84c;
+      --gold-light: #e8c97a;
+      --gold-dim:   #c9a84c22;
+      --gold-glow:  #c9a84c18;
+      --radius-sm:  6px;
+      --radius-md:  12px;
+      --radius-lg:  20px;
+      --nav-h:      64px;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body:    'DM Sans', system-ui, sans-serif;
+      --transition:   0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    button { cursor: pointer; font-family: inherit; }
+
+    /* -- SCROLLBAR ---------------------------------------------- */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--black); }
+    ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+    /* -- NAVBAR ------------------------------------------------- */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: var(--nav-h);
+      background: rgba(8,8,8,0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 0.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 40px;
+      gap: 32px;
+      transition: background var(--transition);
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 500;
+      letter-spacing: 4px;
+      color: var(--gold);
+      text-transform: uppercase;
+      flex-shrink: 0;
+      position: relative;
+    }
+    .nav-logo::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0; right: 0;
+      height: 0.5px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transition: transform var(--transition);
+    }
+    .nav-logo:hover::after { transform: scaleX(1); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 1;
+    }
+
+    .nav-link {
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      transition: color var(--transition), background var(--transition);
+      position: relative;
+    }
+    .nav-link:hover, .nav-link.active {
+      color: var(--gold);
+      background: var(--gold-glow);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-left: auto;
+    }
+
+    .nav-user {
+      font-size: 12px;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+    .nav-user span { color: var(--gold); }
+
+    .btn-cart {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      border: 0.5px solid var(--border2);
+      border-radius: var(--radius-sm);
+      padding: 8px 16px;
+      color: var(--text);
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: border-color var(--transition), color var(--transition), background var(--transition);
+    }
+    .btn-cart:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: var(--gold-glow);
+    }
+    .btn-cart svg { width: 16px; height: 16px; stroke: currentColor; fill: none; }
+
+    .cart-badge {
+      background: var(--gold);
+      color: var(--black);
+      font-size: 10px;
+      font-weight: 500;
+      border-radius: 10px;
+      padding: 1px 6px;
+      min-width: 18px;
+      text-align: center;
+    }
+
+    .btn-login {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--gold);
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 8px 18px;
+      color: var(--black);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: background var(--transition), transform var(--transition);
+    }
+    .btn-login:hover {
+      background: var(--gold-light);
+      transform: translateY(-1px);
+    }
+
+    .btn-logout {
+      font-size: 11px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      background: transparent;
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 6px 12px;
+      transition: color var(--transition), border-color var(--transition);
+    }
+    .btn-logout:hover { color: #e05c5c; border-color: #e05c5c44; }
+
+    /* -- MAIN --------------------------------------------------- */
+    main {
+      flex: 1;
+      padding-top: var(--nav-h);
+    }
+
+    /* -- FOOTER ------------------------------------------------- */
+    .footer {
+      background: var(--surface);
+      border-top: 0.5px solid var(--border);
+      padding: 48px 40px 32px;
+      margin-top: auto;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+      max-width: 1200px;
+      margin: 0 auto 40px;
+    }
+
+    .footer-brand {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 500;
+      letter-spacing: 4px;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .footer-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.8;
+      max-width: 280px;
+    }
+
+    .footer-col-title {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+      font-weight: 500;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: var(--text-muted);
+      transition: color var(--transition);
+    }
+    .footer-links a:hover { color: var(--text); }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-top: 24px;
+      border-top: 0.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-copy {
+      font-size: 12px;
+      color: var(--text-dim);
+      letter-spacing: 0.5px;
+    }
+
+    .footer-tagline {
+      font-family: var(--font-display);
+      font-size: 13px;
+      color: var(--text-dim);
+      font-style: italic;
+    }
+
+    /* -- GOLD LINE ACCENT --------------------------------------- */
+    .gold-line {
+      height: 0.5px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 0;
+    }
+
+    /* -- FADE-IN ANIMATION -------------------------------------- */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.6s ease forwards;
+    }
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* -- FLASH MESSAGES ----------------------------------------- */
+    .flash {
+      padding: 12px 40px;
+      font-size: 13px;
+      text-align: center;
+    }
+    .flash.error { background: #e05c5c18; color: #e05c5c; border-bottom: 0.5px solid #e05c5c33; }
+    .flash.success { background: var(--gold-glow); color: var(--gold); border-bottom: 0.5px solid var(--gold); }
+
+    /* -- BUTTONS GLOBAL ----------------------------------------- */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--gold);
+      color: var(--black);
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 12px 28px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      transition: background var(--transition), transform var(--transition);
+      cursor: pointer;
+    }
+    .btn-primary:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--text);
+      border: 0.5px solid var(--border2);
+      border-radius: var(--radius-sm);
+      padding: 12px 28px;
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      transition: border-color var(--transition), color var(--transition), background var(--transition);
+      cursor: pointer;
+    }
+    .btn-outline:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: var(--gold-glow);
+    }
+
+    {% block extra_styles %}{% endblock %}
+  </style>
+</head>
+<body>
+
+  <!-- -- NAVBAR -- -->
+  <nav class="nav">
+    <a href="{{ url_for('index') }}" class="nav-logo">PixelStore</a>
+
+    <div class="nav-links">
+      <a href="{{ url_for('index') }}" class="nav-link {% if request.endpoint == 'index' %}active{% endif %}">Catalogue</a>
+      {% set cart_count = namespace(n=0) %}
+      {% for qty in session.get('cart', {}).values() %}
+        {% set cart_count.n = cart_count.n + qty %}
+      {% endfor %}
+    
+      <a href="{{ url_for('cart') }}" class="nav-link {% if request.endpoint == 'cart' %}active{% endif %}">Panier ({{ cart_count.n }})</a>
+    </div>
+
+    <div class="nav-right">
+      {% if session.get('user') %}
+        <span class="nav-user">Bonjour, <span>{{ session.user.name }}</span></span>
+        <a href="{{ url_for('logout') }}" class="btn-logout">Déconnexion</a>
+      {% else %}
+        <a href="{{ url_for('login') }}" class="btn-login">
+          <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Connexion
+        </a>
+      {% endif %}
+
+    </div>
+  </nav>
+
+  <!-- -- FLASH MESSAGES -- -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="flash {{ category }}">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <!-- -- MAIN CONTENT -- -->
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- -- FOOTER -- -->
+  <div class="gold-line"></div>
+  <footer class="footer">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">PixelStore</div>
+        <p class="footer-desc">Votre destination premium pour les smartphones haut de gamme. Les derniers modèles Apple, Samsung et Google livrés en 24h à Paris et en Île-de-France.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Navigation</div>
+        <div class="footer-links">
+          <a href="{{ url_for('index') }}">Catalogue</a>
+          <a href="{{ url_for('cart') }}">Mon panier</a>
+          <a href="{{ url_for('login') }}">Mon compte</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Marques</div>
+        <div class="footer-links">
+          <a href="{{ url_for('index', brand='Apple') }}">Apple</a>
+          <a href="{{ url_for('index', brand='Samsung') }}">Samsung</a>
+          <a href="{{ url_for('index', brand='Google') }}">Google Pixel</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Infos</div>
+        <div class="footer-links">
+          <a href="#">Livraison 24h</a>
+          <a href="#">Garantie 2 ans</a>
+          <a href="#">SAV & Retours</a>
+          <a href="#">CGV</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 PixelStore - Paris, France</span>
+      <span class="footer-tagline">L'excellence technologique, livrée.</span>
+    </div>
+  </footer>
+
+  {% block extra_scripts %}{% endblock %}
+</body>
+</html>

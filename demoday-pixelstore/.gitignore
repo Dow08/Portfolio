@@ -1,0 +1,22 @@
+# Secrets & état Terraform — NE JAMAIS publier (s'appliquent à tous les dossiers, dont Demoday_Jedha/)
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+.terraform.lock.hcl
+crash.log
+
+# Secrets génériques
+*.pem
+*.key
+*.env
+.env
+id_rsa*
+
+# Outillage local
+.claude/
+
+# Fichiers temporaires PDF
+_*.html
+_pdf_style.css
